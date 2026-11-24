@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f7f5f0">
+    <meta name="description" content="Explore a 3D liver and change ten lab measurements to see how Team A-9's coursework model responds.">
+    <title>Liver Panel Explorer · Team A-9</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="shell header-content">
+        <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">A9</span> Team A-9</a>
+        <span class="course">BCP308 Community Project</span>
+      </div>
+    </header>
+    <main class="shell">
+      <div class="intro">
+        <h1>Liver Panel Explorer</h1>
+        <p>Explore the liver in 3D, then adjust a sample panel to see how our machine learning model responds.</p>
+      </div>
+      <div class="workspace">
+        <div class="overview">
+          <section class="anatomy" aria-labelledby="anatomy-title">
+            <div class="anatomy-heading">
+              <h2 id="anatomy-title">Human liver</h2>
+              <span class="mesh-tag">3D anatomy</span>
+            </div>
+            <div class="scene-wrap">
+              <div id="liver-view" class="scene" aria-label="Interactive 3D model of a human liver"></div>
+              <p id="liver-status" class="scene-status" role="status">Loading the liver model…</p>
+            </div>
+            <div class="anatomy-footer">
+              <span id="liver-instructions">Drag to rotate · Scroll or pinch to zoom</span>
+              <div class="view-controls" aria-label="Liver view controls" hidden>
+                <button type="button" data-turn="-1" aria-label="Rotate liver left" title="Rotate left">↶</button>
+                <button type="button" data-turn="1" aria-label="Rotate liver right" title="Rotate right">↷</button>
+                <button type="button" id="reset-view">Reset view</button>
+              </div>
+            </div>
+          </section>
+          <section class="prediction" aria-labelledby="prediction-title">
+            <div class="result-heading">
+              <h2 id="prediction-title">Model prediction</h2>
+              <span class="live-label">Live</span>
+            </div>
+            <div id="prediction" aria-live="polite" aria-atomic="true">Loading prediction…</div>
+            <div class="score">
+              <div class="score-label"><span>Model score</span><strong id="score-value">—</strong></div>
+              <div class="score-track" aria-hidden="true"><span id="score-fill"></span><i id="score-cutoff"></i></div>
+              <p class="cutoff-note">Flag cutoff <strong id="cutoff-value">—</strong></p>
+            </div>
+            <p class="scope">Coursework demo only. The score cannot diagnose hepatitis C or determine blood donation eligibility.</p>
+          </section>
+        </div>
+        <section id="labs" class="labs" aria-labelledby="labs-title">
+          <div class="labs-header">
+            <div>
+              <h2 id="labs-title">Lab measurements</h2>
+              <p>Load a preset and change one value at a time.</p>
+            </div>
+            <button type="button" id="reset-panel" class="reset" disabled>Reset panel</button>
+          </div>
+          <div class="presets" role="group" aria-label="Sample panel">
+            <button type="button" data-preset="donor" aria-pressed="false" disabled>Donor sample</button>
+            <button type="button" data-preset="disease" aria-pressed="false" disabled>Disease-group sample</button>
+            <span id="panel-state" class="panel-state" role="status"></span>
+          </div>
+          <div id="measurements" class="measurements"></div>
+          <div class="model-explanation">
+            <h3>How the model works</h3>
+            <p>A random forest uses 160 decision trees. Each tree uses the lab values to produce a score. The model averages those scores and flags panels that meet the cutoff.</p>
+          </div>
+        </section>
+      </div>
+    </main>
+    <footer class="shell footer">
+      <span>Team A-9 · Hepatitis C screening project</span>
+      <nav aria-label="Sources">
+        <a href="https://github.com/manaskesarla/Hepatitis-C-Screening">GitHub</a>
+        <a href="https://doi.org/10.24432/C5D612">UCI dataset</a>
+        <a href="https://github.com/Kevin-Mattheus-Moerman/BodyParts3D">3D model credit</a>
+      </nav>
+    </footer>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
