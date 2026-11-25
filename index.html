@@ -3,35 +3,36 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#f7f5f0">
+    <meta name="theme-color" content="#f6f3ee">
     <meta name="description" content="Explore a 3D liver and change ten lab measurements to see how Team A-9's coursework model responds.">
     <title>Liver Panel Explorer · Team A-9</title>
+    <link rel="stylesheet" href="./src/style.css">
   </head>
   <body>
     <header class="site-header">
       <div class="shell header-content">
-        <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">A9</span> Team A-9</a>
+        <a class="brand" href="./">Team A-9</a>
         <span class="course">BCP308 Community Project</span>
       </div>
     </header>
     <main class="shell">
-      <div class="intro">
+          <div class="intro">
         <h1>Liver Panel Explorer</h1>
-        <p>Explore the liver in 3D, then adjust a sample panel to see how our machine learning model responds.</p>
+        <p>Adjust a sample liver panel to see how the HCV coursework model reads it.</p>
       </div>
       <div class="workspace">
         <div class="overview">
           <section class="anatomy" aria-labelledby="anatomy-title">
             <div class="anatomy-heading">
               <h2 id="anatomy-title">Human liver</h2>
-              <span class="mesh-tag">3D anatomy</span>
+              <span class="mesh-tag">Interactive anatomy</span>
             </div>
             <div class="scene-wrap">
               <div id="liver-view" class="scene" aria-label="Interactive 3D model of a human liver"></div>
               <p id="liver-status" class="scene-status" role="status">Loading the liver model…</p>
             </div>
             <div class="anatomy-footer">
-              <span id="liver-instructions">Drag to rotate · Scroll or pinch to zoom</span>
+              <span id="liver-instructions">Drag to rotate. Scroll or pinch to zoom.</span>
               <div class="view-controls" aria-label="Liver view controls" hidden>
                 <button type="button" data-turn="-1" aria-label="Rotate liver left" title="Rotate left">↶</button>
                 <button type="button" data-turn="1" aria-label="Rotate liver right" title="Rotate right">↷</button>
@@ -41,16 +42,16 @@
           </section>
           <section class="prediction" aria-labelledby="prediction-title">
             <div class="result-heading">
-              <h2 id="prediction-title">Model prediction</h2>
-              <span class="live-label">Live</span>
+              <h2 id="prediction-title" tabindex="-1">Model prediction</h2>
             </div>
             <div id="prediction" aria-live="polite" aria-atomic="true">Loading prediction…</div>
+            <span id="score-announcement" class="visually-hidden" role="status"></span>
             <div class="score">
-              <div class="score-label"><span>Model score</span><strong id="score-value">—</strong></div>
+              <div class="score-label"><span>Model score <strong id="score-value">Pending</strong></span><span>Flag cutoff <strong id="cutoff-value">Pending</strong></span></div>
               <div class="score-track" aria-hidden="true"><span id="score-fill"></span><i id="score-cutoff"></i></div>
-              <p class="cutoff-note">Flag cutoff <strong id="cutoff-value">—</strong></p>
             </div>
-            <p class="scope">Coursework demo only. The score cannot diagnose hepatitis C or determine blood donation eligibility.</p>
+            <p class="result-note"><strong>How to read this.</strong> Scores at or above the cutoff flag a disease-group pattern. Scores below it are donor-like.</p>
+            <p class="scope">Educational ML project. The score cannot diagnose hepatitis C or determine blood donation eligibility.</p>
           </section>
         </div>
         <section id="labs" class="labs" aria-labelledby="labs-title">
@@ -66,7 +67,24 @@
             <button type="button" data-preset="disease" aria-pressed="false" disabled>Disease-group sample</button>
             <span id="panel-state" class="panel-state" role="status"></span>
           </div>
-          <div id="measurements" class="measurements"></div>
+          <p class="reference-note" id="reference-note">Slider limits are shown for each measurement. Clinical reference intervals are pending verification.</p>
+          <div id="measurements" class="measurements">
+            <section aria-labelledby="enzymes-title">
+              <h3 id="enzymes-title">Enzymes</h3>
+              <div data-group="enzymes"></div>
+              <a class="prediction-return" href="#prediction-title">Return to prediction</a>
+            </section>
+            <section aria-labelledby="proteins-title">
+              <h3 id="proteins-title">Proteins</h3>
+              <div data-group="proteins"></div>
+              <a class="prediction-return" href="#prediction-title">Return to prediction</a>
+            </section>
+            <section aria-labelledby="chemistry-title">
+              <h3 id="chemistry-title">Other blood chemistry</h3>
+              <div data-group="chemistry"></div>
+              <a class="prediction-return" href="#prediction-title">Return to prediction</a>
+            </section>
+          </div>
           <div class="model-explanation">
             <h3>How the model works</h3>
             <p>A random forest uses 160 decision trees. Each tree uses the lab values to produce a score. The model averages those scores and flags panels that meet the cutoff.</p>
@@ -75,7 +93,7 @@
       </div>
     </main>
     <footer class="shell footer">
-      <span>Team A-9 · Hepatitis C screening project</span>
+      <span>Hepatitis C screening project, Team A-9</span>
       <nav aria-label="Sources">
         <a href="https://github.com/manaskesarla/Hepatitis-C-Screening">GitHub</a>
         <a href="https://doi.org/10.24432/C5D612">UCI dataset</a>

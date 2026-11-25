@@ -1,4 +1,3 @@
-import './style.css';
 import { predictScore } from './predict.js';
 
 const modelUrl = import.meta.env.BASE_URL + 'assets/screening-model.json';
@@ -22,9 +21,15 @@ const presetButtons = [...document.querySelectorAll('[data-preset]')];
 const panelState = document.querySelector('#panel-state');
 const scoreFill = document.querySelector('#score-fill');
 const scoreValue = document.querySelector('#score-value');
+const scoreAnnouncement = document.querySelector('#score-announcement');
 const cutoffValue = document.querySelector('#cutoff-value');
 const cutoffMarker = document.querySelector('#score-cutoff');
 const controls = document.querySelector('#measurements');
+const measurementGroups = {
+  ALP: 'enzymes', ALT: 'enzymes', AST: 'enzymes', CHE: 'enzymes', GGT: 'enzymes',
+  ALB: 'proteins', PROT: 'proteins',
+  BIL: 'chemistry', CHOL: 'chemistry', CREA: 'chemistry',
+};
 
 function addMeasurement({ key, min, max, step }, onChange) {
   const [fullName, unit] = names[key];
@@ -56,9 +61,18 @@ function addMeasurement({ key, min, max, step }, onChange) {
     update();
     onChange();
   });
+  range.addEventListener('change', () => {
+    scoreAnnouncement.textContent = 'Model score ' + scoreValue.textContent;
+  });
 
-  row.append(label, value, range);
-  controls.append(row);
+  const limits = document.createElement('span');
+  limits.className = 'limits';
+  limits.id = key + '-limits';
+  limits.textContent = min + ' to ' + max + ' ' + unit;
+  range.setAttribute('aria-describedby', limits.id + ' reference-note');
+
+  row.append(label, value, range, limits);
+  controls.querySelector(`[data-group="${measurementGroups[key]}"]`).append(row);
 
   return {
     range,
