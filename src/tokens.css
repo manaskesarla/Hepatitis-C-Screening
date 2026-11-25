@@ -1,0 +1,18 @@
+/* Hallmark · custom tokens for the liver panel */
+:root {
+  --ui: 'DM Sans', system-ui, sans-serif;
+  --display: 'Instrument Serif', Georgia, serif;
+  --paper: #f6f3ee;
+  --plate: #e8e0d8;
+  --section: #ede7df;
+  --ink: #28221e;
+  --muted: #61554c;
+  --accent: #813c34;
+  --on-accent: #fff8f3;
+  --focus: #71332d;
+  --edge: #8c7b70;
+  --rule: #cbbdb2;
+  --disabled-fill: #e9e2da;
+  --donor: #315c45;
+  --disease: #8b342e;
+}
